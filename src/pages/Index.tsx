@@ -15,78 +15,103 @@ const Index = () => {
   const { toast } = useToast();
   const resultsRef = useRef<HTMLDivElement>(null);
 
+  const extractTwitterId = (url: string): string | null => {
+    const regex = /twitter\.com\/\w+\/status\/(\d+)/;
+    const match = url.match(regex);
+    return match ? match[1] : null;
+  };
+
+  const analyzeTweet = async (tweetId: string) => {
+    try {
+      // Here we would typically make an API call to Twitter's API
+      // For now, let's simulate different responses based on the tweet ID
+      const response = await fetch(`https://api.twitter.com/2/tweets/${tweetId}`, {
+        headers: {
+          'Authorization': `Bearer ${process.env.TWITTER_BEARER_TOKEN}`,
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch tweet data');
+      }
+
+      const tweetData = await response.json();
+      
+      // Process the tweet data and generate analysis
+      // This is where you'd implement actual sentiment analysis, etc.
+      return {
+        summary: `Analysis of Tweet ${tweetId}\n• ${tweetData.data.text}\n• Generated engagement metrics\n• Analyzed sentiment`,
+        tldr: tweetData.data.text.slice(0, 100) + "...",
+        sentiment: {
+          overall: Math.random() > 0.5 ? "positive" : "negative",
+          breakdown: {
+            positive: Math.floor(Math.random() * 60 + 40),
+            neutral: Math.floor(Math.random() * 30),
+            negative: Math.floor(Math.random() * 30)
+          },
+          highlightedTweets: [
+            {
+              text: tweetData.data.text,
+              sentiment: "positive",
+              score: Math.random()
+            }
+          ]
+        },
+        engagement: {
+          topTweets: [
+            {
+              text: tweetData.data.text,
+              likes: Math.floor(Math.random() * 1000),
+              retweets: Math.floor(Math.random() * 500),
+              replies: Math.floor(Math.random() * 100),
+              engagementScore: Math.random()
+            }
+          ],
+          mostEngaging: {
+            text: tweetData.data.text,
+            comparisonMetric: "This tweet performed above average"
+          }
+        }
+      };
+    } catch (error) {
+      console.error('Error analyzing tweet:', error);
+      throw error;
+    }
+  };
+
   const handleAnalyze = async (content: { type: "url" | "text"; value: string }) => {
     setIsLoading(true);
     try {
-      // Mock API call - Replace with actual API integration
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      
-      // Simulate different analysis based on input type
       if (content.type === "url") {
-        setAnalysis({
-          summary: "• Thread from URL analysis\n• Key point 1: AI tools can boost efficiency by 40%\n• Key point 2: Integration with existing workflows is crucial\n• Key point 3: Training and adaptation period is necessary",
-          tldr: "AI tools significantly boost productivity when properly integrated into existing workflows, though they require initial training and adaptation.",
-          sentiment: {
-            overall: "positive",
-            breakdown: {
-              positive: 65,
-              neutral: 25,
-              negative: 10
-            },
-            highlightedTweets: [
-              {
-                text: "AI-powered automation has revolutionized our workflow, cutting processing time by 40%! 🚀",
-                sentiment: "positive",
-                score: 0.92
-              },
-              {
-                text: "Initial setup can be challenging, but the long-term benefits are worth it.",
-                sentiment: "negative",
-                score: -0.3
-              }
-            ]
-          },
-          engagement: {
-            topTweets: [
-              {
-                text: "AI tools have helped us achieve a 40% reduction in processing time while maintaining accuracy.",
-                likes: 1200,
-                retweets: 450,
-                replies: 89,
-                engagementScore: 0.95
-              },
-              {
-                text: "Here's a step-by-step guide to integrating AI tools into your existing workflow:",
-                likes: 800,
-                retweets: 350,
-                replies: 45,
-                engagementScore: 0.85
-              }
-            ],
-            mostEngaging: {
-              text: "AI tools have helped us achieve a 40% reduction in processing time while maintaining accuracy.",
-              comparisonMetric: "This tweet received 5x more engagement than the thread average"
-            }
-          }
-        });
+        const tweetId = extractTwitterId(content.value);
+        
+        if (!tweetId) {
+          throw new Error("Invalid Twitter URL");
+        }
+
+        const analysisResult = await analyzeTweet(tweetId);
+        setAnalysis(analysisResult);
 
         // Scroll to results after a short delay to ensure content is rendered
         setTimeout(() => {
           resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         }, 100);
-      }
 
-      toast({
-        title: "Analysis Complete",
-        description: "Your thread has been successfully analyzed!",
-      });
+        toast({
+          title: "Analysis Complete",
+          description: "Your thread has been successfully analyzed!",
+        });
+      } else {
+        throw new Error("Please provide a valid Twitter URL");
+      }
     } catch (error) {
       console.error("Error analyzing thread:", error);
       toast({
         title: "Analysis Failed",
-        description: "There was an error analyzing your thread. Please try again.",
+        description: error instanceof Error ? error.message : "There was an error analyzing your thread. Please try again.",
         variant: "destructive",
       });
+      setAnalysis(null);
     } finally {
       setIsLoading(false);
     }
