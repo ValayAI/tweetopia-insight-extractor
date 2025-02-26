@@ -47,8 +47,8 @@ const Index = () => {
             {analysis && <AnalysisResults {...analysis} />}
           </div>
 
-          <div className="pt-8">
-            <div className="text-center mb-8">
+          <div>
+            <div className="text-center mb-4">
               <h2 className="text-2xl font-semibold">Optional Features</h2>
               <p className="text-muted-foreground">
                 Discover more powerful analysis tools

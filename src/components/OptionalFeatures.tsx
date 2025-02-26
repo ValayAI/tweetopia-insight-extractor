@@ -8,7 +8,7 @@ const featureCards = [
   {
     icon: <MessageCircle className="size-4 text-purple-300" />,
     title: "Sentiment Analysis",
-    description: "Understand the emotional tone of threads",
+    description: "Analyze the emotional tone and context of threads. Detect positive, negative, or neutral sentiment with AI-powered analysis, helping you understand public perception and emotional responses.",
     date: "Optional Feature",
     iconClassName: "text-purple-500",
     titleClassName: "text-purple-500",
@@ -18,7 +18,7 @@ const featureCards = [
   {
     icon: <BarChart2 className="size-4 text-amber-300" />,
     title: "Engagement Insights",
-    description: "Track likes, retweets, and impact",
+    description: "Get detailed metrics about likes, retweets, and replies. Understand which parts of threads resonate most with audiences and identify peak engagement patterns.",
     date: "Optional Feature",
     iconClassName: "text-amber-500",
     titleClassName: "text-amber-500",
@@ -28,7 +28,7 @@ const featureCards = [
   {
     icon: <Sparkles className="size-4 text-rose-300" />,
     title: "Coming Soon",
-    description: "More features in development",
+    description: "Advanced analytics, custom exports, and team collaboration features. Stay tuned for more powerful tools to enhance your Twitter thread analysis.",
     date: "Stay tuned",
     iconClassName: "text-rose-500",
     titleClassName: "text-rose-500",
