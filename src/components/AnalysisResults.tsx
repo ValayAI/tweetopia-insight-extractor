@@ -4,6 +4,7 @@ import { Copy, Share2, ThumbsUp, ThumbsDown, Minus, BarChart2 } from "lucide-rea
 import { useToast } from "@/components/ui/use-toast";
 import type { AnalysisData } from "@/types/analysis";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 export function AnalysisResults({ summary, tldr, sentiment, engagement }: AnalysisData) {
   const { toast } = useToast();
@@ -34,38 +35,62 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
         return <Minus className="h-4 w-4 text-yellow-500" />;
     }
   };
+  
+  const CardFeature = ({
+    icon,
+    title,
+    children,
+    className,
+  }: {
+    icon: React.ReactNode;
+    title: string;
+    children: React.ReactNode;
+    className?: string;
+  }) => {
+    return (
+      <Card className={cn(
+        "group/feature relative overflow-hidden",
+        "transition-all duration-300 ease-in-out",
+        "border border-neutral-200 dark:border-neutral-800",
+        className
+      )}>
+        <div className="opacity-0 group-hover/feature:opacity-100 transition duration-200 absolute inset-0 h-full w-full bg-gradient-to-t from-neutral-100/50 dark:from-neutral-800/50 to-transparent pointer-events-none" />
+        
+        <div className="p-6 relative z-10">
+          <div className="mb-4 text-neutral-600 dark:text-neutral-400">
+            {icon}
+          </div>
+          <div className="text-lg font-bold mb-2 relative group-hover/feature:translate-x-2 transition-all duration-200">
+            <div className="absolute left-0 inset-y-0 -ml-6 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-neutral-300 dark:bg-neutral-700 group-hover/feature:bg-blue-500 transition-all duration-200 origin-center" />
+            <span className="text-neutral-800 dark:text-neutral-100">
+              {title}
+            </span>
+          </div>
+          <div className="relative z-10">
+            {children}
+          </div>
+        </div>
+      </Card>
+    );
+  };
 
   return (
     <div className="w-full max-w-2xl space-y-4 animate-fadeIn">
-      {/* TL;DR Section */}
-      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-blue-500/50">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent" />
-        <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">TL;DR</h3>
-            <div className="space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => copyToClipboard(tldr)}
-              >
-                <Copy className="h-4 w-4" />
-              </Button>
-              <Button variant="ghost" size="sm">
-                <Share2 className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-          <p className="text-sm text-muted-foreground">{tldr}</p>
-        </div>
-      </Card>
+      <CardFeature
+        icon={<Copy className="h-6 w-6" />}
+        title="TL;DR"
+        className="bg-gradient-to-br from-blue-50/50 to-purple-50/50 dark:from-blue-950/50 dark:to-purple-950/50"
+      >
+        <p className="text-sm text-muted-foreground">{tldr}</p>
+      </CardFeature>
 
-      {/* Sentiment Analysis Section */}
-      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-green-500/50">
-        <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent" />
+      <CardFeature
+        icon={<ThumbsUp className="h-6 w-6" />}
+        title="Sentiment Analysis"
+        className="bg-gradient-to-br from-green-50/50 to-emerald-50/50 dark:from-green-950/50 dark:to-emerald-950/50"
+      >
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Sentiment Analysis</h3>
             <div className="flex items-center space-x-2">
               {getSentimentIcon(sentiment.overall)}
               <span className="text-sm font-medium capitalize">{sentiment.overall}</span>
@@ -115,14 +140,15 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
             </div>
           )}
         </div>
-      </Card>
+      </CardFeature>
 
-      {/* Engagement Metrics Section */}
-      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-purple-500/50">
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent" />
+      <CardFeature
+        icon={<BarChart2 className="h-6 w-6" />}
+        title="Engagement Insights"
+        className="bg-gradient-to-br from-purple-50/50 to-pink-50/50 dark:from-purple-950/50 dark:to-pink-950/50"
+      >
         <div className="space-y-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Engagement Insights</h3>
             <BarChart2 className="h-5 w-5 text-muted-foreground" />
           </div>
 
@@ -148,14 +174,15 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
             </div>
           </div>
         </div>
-      </Card>
+      </CardFeature>
 
-      {/* Key Takeaways Section */}
-      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-amber-500/50">
-        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent" />
+      <CardFeature
+        icon={<Copy className="h-6 w-6" />}
+        title="Key Takeaways"
+        className="bg-gradient-to-br from-amber-50/50 to-yellow-50/50 dark:from-amber-950/50 dark:to-yellow-950/50"
+      >
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Key Takeaways</h3>
             <div className="space-x-2">
               <Button
                 variant="ghost"
@@ -175,7 +202,7 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
             ))}
           </div>
         </div>
-      </Card>
+      </CardFeature>
     </div>
   );
 }
