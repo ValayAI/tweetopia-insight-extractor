@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { TweetInput } from "@/components/TweetInput";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -12,6 +12,7 @@ const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [analysis, setAnalysis] = useState<AnalysisData | null>(null);
   const { toast } = useToast();
+  const resultsRef = useRef<HTMLDivElement>(null);
 
   const handleAnalyze = async (content: { type: "url" | "text"; value: string }) => {
     setIsLoading(true);
@@ -67,8 +68,11 @@ const Index = () => {
             }
           }
         });
-      } else {
-        // ... similar mock data for text input analysis
+
+        // Scroll to results after a short delay to ensure content is rendered
+        setTimeout(() => {
+          resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 100);
       }
 
       toast({
@@ -117,7 +121,9 @@ const Index = () => {
 
           <div className="flex flex-col items-center space-y-8">
             <TweetInput onAnalyze={handleAnalyze} isLoading={isLoading} />
-            {analysis && <AnalysisResults {...analysis} />}
+            <div ref={resultsRef}>
+              {analysis && <AnalysisResults {...analysis} />}
+            </div>
           </div>
         </div>
       </div>

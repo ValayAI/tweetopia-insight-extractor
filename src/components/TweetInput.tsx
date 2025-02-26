@@ -78,7 +78,7 @@ export function TweetInput({ onAnalyze, isLoading }: TweetInputProps) {
 
         <Button 
           type="submit" 
-          className="w-full"
+          className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
           disabled={isLoading || !isValidInput}
         >
           {isLoading ? (
