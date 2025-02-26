@@ -3,6 +3,7 @@ import { useState } from "react";
 import { TweetInput } from "@/components/TweetInput";
 import { AnalysisResults } from "@/components/AnalysisResults";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { OptionalFeatures } from "@/components/OptionalFeatures";
 
 interface AnalysisData {
   summary: string;
@@ -44,6 +45,16 @@ const Index = () => {
           <div className="flex flex-col items-center space-y-8">
             <TweetInput onAnalyze={handleAnalyze} isLoading={isLoading} />
             {analysis && <AnalysisResults {...analysis} />}
+          </div>
+
+          <div className="pt-8">
+            <div className="text-center mb-8">
+              <h2 className="text-2xl font-semibold">Optional Features</h2>
+              <p className="text-muted-foreground">
+                Discover more powerful analysis tools
+              </p>
+            </div>
+            <OptionalFeatures />
           </div>
         </div>
       </div>
