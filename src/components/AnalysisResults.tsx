@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Copy, Share2, ThumbsUp, ThumbsDown, Minus, BarChart2 } from "lucide-react";
@@ -39,7 +38,8 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
   return (
     <div className="w-full max-w-2xl space-y-4 animate-fadeIn">
       {/* TL;DR Section */}
-      <Card className="glass glass-hover p-6">
+      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-blue-500/50">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent" />
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">TL;DR</h3>
@@ -61,7 +61,8 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
       </Card>
 
       {/* Sentiment Analysis Section */}
-      <Card className="glass glass-hover p-6">
+      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-green-500/50">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent" />
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Sentiment Analysis</h3>
@@ -117,7 +118,8 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
       </Card>
 
       {/* Engagement Metrics Section */}
-      <Card className="glass glass-hover p-6">
+      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-purple-500/50">
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent" />
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Engagement Insights</h3>
@@ -149,7 +151,8 @@ export function AnalysisResults({ summary, tldr, sentiment, engagement }: Analys
       </Card>
 
       {/* Key Takeaways Section */}
-      <Card className="glass glass-hover p-6">
+      <Card className="glass glass-hover p-6 relative overflow-hidden border-t-4 border-t-amber-500/50">
+        <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-transparent" />
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Key Takeaways</h3>
