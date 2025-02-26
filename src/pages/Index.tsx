@@ -48,7 +48,7 @@ const Index = () => {
           </div>
 
           <div>
-            <div className="text-center mb-4">
+            <div className="text-center mb-2">
               <h2 className="text-2xl font-semibold">Optional Features</h2>
               <p className="text-muted-foreground">
                 Discover more powerful analysis tools
