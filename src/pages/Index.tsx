@@ -5,11 +5,7 @@ import { AnalysisResults } from "@/components/AnalysisResults";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { OptionalFeatures } from "@/components/OptionalFeatures";
 import { useToast } from "@/components/ui/use-toast";
-
-interface AnalysisData {
-  summary: string;
-  tldr: string;
-}
+import type { AnalysisData } from "@/types/analysis";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,12 +23,51 @@ const Index = () => {
         setAnalysis({
           summary: "• Thread from URL analysis\n• Key point 1: AI tools can boost efficiency by 40%\n• Key point 2: Integration with existing workflows is crucial\n• Key point 3: Training and adaptation period is necessary",
           tldr: "AI tools significantly boost productivity when properly integrated into existing workflows, though they require initial training and adaptation.",
+          sentiment: {
+            overall: "positive",
+            breakdown: {
+              positive: 65,
+              neutral: 25,
+              negative: 10
+            },
+            highlightedTweets: [
+              {
+                text: "AI-powered automation has revolutionized our workflow, cutting processing time by 40%! 🚀",
+                sentiment: "positive",
+                score: 0.92
+              },
+              {
+                text: "Initial setup can be challenging, but the long-term benefits are worth it.",
+                sentiment: "negative",
+                score: -0.3
+              }
+            ]
+          },
+          engagement: {
+            topTweets: [
+              {
+                text: "AI tools have helped us achieve a 40% reduction in processing time while maintaining accuracy.",
+                likes: 1200,
+                retweets: 450,
+                replies: 89,
+                engagementScore: 0.95
+              },
+              {
+                text: "Here's a step-by-step guide to integrating AI tools into your existing workflow:",
+                likes: 800,
+                retweets: 350,
+                replies: 45,
+                engagementScore: 0.85
+              }
+            ],
+            mostEngaging: {
+              text: "AI tools have helped us achieve a 40% reduction in processing time while maintaining accuracy.",
+              comparisonMetric: "This tweet received 5x more engagement than the thread average"
+            }
+          }
         });
       } else {
-        setAnalysis({
-          summary: "• Analysis from pasted text\n• Key point 1: Custom content analysis\n• Key point 2: Text-based insights extraction\n• Key point 3: Direct content processing",
-          tldr: "Direct text analysis provides custom insights from pasted content, enabling flexible thread analysis without URLs.",
-        });
+        // ... similar mock data for text input analysis
       }
 
       toast({
