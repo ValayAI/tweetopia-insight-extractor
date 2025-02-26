@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/use-toast";
 import type { AnalysisData } from "@/types/analysis";
 import { Globe, Sparkles } from "lucide-react";
 import { BackgroundGradientAnimation } from "@/components/BackgroundGradientAnimation";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -99,8 +100,9 @@ const Index = () => {
       secondColor="221, 74, 255"
       thirdColor="100, 220, 255"
       pointerColor="140, 100, 255"
-      containerClassName="min-h-screen w-full relative"
+      containerClassName="min-h-screen w-full relative overflow-y-auto"
     >
+      <ScrollToTop />
       <ThemeToggle />
       <div className="container mx-auto px-4 py-16 relative z-20">
         <div className="max-w-3xl mx-auto space-y-8">
