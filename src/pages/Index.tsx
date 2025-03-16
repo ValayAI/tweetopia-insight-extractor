@@ -43,6 +43,9 @@ const Index = () => {
         (Math.random() > 0.5 ? "positive" : "negative") : 
         "neutral";
       
+      // Generate a sentiment type that is strictly "positive" or "negative" for highlightedTweets
+      const tweetSentiment = Math.random() > 0.5 ? "positive" as const : "negative" as const;
+      
       // Process the tweet data and generate analysis
       // This is where you'd implement actual sentiment analysis, etc.
       return {
@@ -58,7 +61,7 @@ const Index = () => {
           highlightedTweets: [
             {
               text: tweetData.data.text,
-              sentiment: Math.random() > 0.5 ? "positive" : "negative",
+              sentiment: tweetSentiment,
               score: Math.random()
             }
           ]
