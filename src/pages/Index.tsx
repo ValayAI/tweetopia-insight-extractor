@@ -37,13 +37,19 @@ const Index = () => {
 
       const tweetData = await response.json();
       
+      // Determine sentiment based on content or randomize for demo
+      // Ensure we use the correct type for sentiment.overall
+      const sentimentType = Math.random() > 0.5 ? 
+        (Math.random() > 0.5 ? "positive" : "negative") : 
+        "neutral";
+      
       // Process the tweet data and generate analysis
       // This is where you'd implement actual sentiment analysis, etc.
       return {
         summary: `Analysis of Tweet ${tweetId}\n• ${tweetData.data.text}\n• Generated engagement metrics\n• Analyzed sentiment`,
         tldr: tweetData.data.text.slice(0, 100) + "...",
         sentiment: {
-          overall: Math.random() > 0.5 ? "positive" : "negative",
+          overall: sentimentType as "positive" | "negative" | "neutral",
           breakdown: {
             positive: Math.floor(Math.random() * 60 + 40),
             neutral: Math.floor(Math.random() * 30),
@@ -52,7 +58,7 @@ const Index = () => {
           highlightedTweets: [
             {
               text: tweetData.data.text,
-              sentiment: "positive",
+              sentiment: Math.random() > 0.5 ? "positive" : "negative",
               score: Math.random()
             }
           ]
